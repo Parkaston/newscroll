@@ -6,14 +6,13 @@ import { useFavoritos } from "../context/FavoritosContext";
 import { Button, Typography } from "@mui/material";
 
 
-
-
-
 export default function Categoria() {
   const { categoria } = useParams();
   const [noticias, setNoticias] = useState([]);
   const [nextPage, setNextPage] = useState(null);
   const { favoritos, toggleFavorito } = useFavoritos();
+
+  // Traducción para las categorias, para mostrar en el titulo
   const nombresCategoria = {
     environment: "Clima",
     politics: "Política",
@@ -21,6 +20,7 @@ export default function Categoria() {
     sports: "Deportes",
     top: "Top",
   };
+  
   // Reiniciar al cambiar de categoría
   useEffect(() => {
     setNoticias([]);

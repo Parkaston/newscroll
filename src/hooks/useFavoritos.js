@@ -17,7 +17,7 @@ export default function useFavoritos() {
 
   // Actualiza localStorage cuando cambian los favoritos
 useEffect(() => {
-  console.log("🔐 Favoritos actualizados:", favoritos);
+ 
   localStorage.setItem(CLAVE, JSON.stringify(favoritos));
 }, [favoritos]);
   // Agregar una noticia si no está, o quitarla si ya está

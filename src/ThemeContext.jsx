@@ -12,7 +12,7 @@ export function CustomThemeProvider({ children }) {
       palette: {
         mode: modoOscuro ? "dark" : "light",
         primary: {
-          main: modoOscuro ? "#90caf9" : "#333333", // Cambiado el azul por gris
+          main: modoOscuro ? "#90caf9" : "#333333", 
         },
         secondary: {
           main: modoOscuro ? "#424242" : "#f5f5f5",
