@@ -1,53 +1,68 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Typography, Box } from "@mui/material";
 import { obtenerNoticiasPorCategoria } from "../services/newsService";
 import TarjetaNoticia from "../components/TarjetaNoticia";
 import { useFavoritos } from "../context/FavoritosContext";
+import { Button, Typography } from "@mui/material";
+
+
+
+
 
 export default function Categoria() {
-  // ✅ Obtenemos la categoría desde la URL
   const { categoria } = useParams();
-
   const [noticias, setNoticias] = useState([]);
+  const [nextPage, setNextPage] = useState(null);
   const { favoritos, toggleFavorito } = useFavoritos();
-
+  const nombresCategoria = {
+    environment: "Clima",
+    politics: "Política",
+    technology: "Tecnología",
+    sports: "Deportes",
+    top: "Top",
+  };
+  // Reiniciar al cambiar de categoría
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await obtenerNoticiasPorCategoria(categoria);
-      setNoticias(data);
-    };
+    setNoticias([]);
+    setNextPage(null);
+    cargarNoticias(null); // página inicial
+  }, [categoria]);
 
-    fetchData();
-  }, [categoria]); // ✅ Dependencia correcta
+  // Función para cargar noticias
+  const cargarNoticias = async (pageToken = null) => {
+    const { results, nextPage: nuevaPagina } = await obtenerNoticiasPorCategoria(
+      categoria,
+      pageToken
+    );
+
+    setNoticias((prev) => [...prev, ...results]);
+    setNextPage(nuevaPagina); // puede ser null si ya no hay más
+  };
 
   return (
-    <Container
-      maxWidth={false} // 🛑 Desactiva el límite de ancho tipo "lg"
-      disableGutters // 🧼 Elimina padding lateral automático
-      sx={{ mt: 4, px: 2 }} // ✅ Si querés un poco de margen horizontal
-    >
-      <Typography variant="h5" gutterBottom>
-        Noticias de {categoria ? categoria.charAt(0).toUpperCase() + categoria.slice(1) : ""}
-      </Typography>
+    <div>
+        <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
+           Noticias de {nombresCategoria[categoria] || categoria}
+        </Typography>
 
-      {noticias.length === 0 ? (
-  <Typography variant="body2">
-    No se encontraron noticias para esta categoría.
-  </Typography>
-) : (
-  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-    {noticias.map((noticia) => (
-      <TarjetaNoticia
-        key={noticia.link}
-        noticia={noticia}
-        onFavorito={() => toggleFavorito(noticia)}
-        esFavorita={favoritos.some((f) => f.link === noticia.link)}
-      />
-    ))}
-  </Box>
-)}
-      
-    </Container>
+      {noticias.map((noticia, i) => (
+        <TarjetaNoticia
+          key={i}
+          noticia={noticia}
+          esFavorita={favoritos.some((n) => n.link === noticia.link)}
+          onFavorito={toggleFavorito}
+        />
+      ))}
+
+      {nextPage && (
+        <Button
+          variant="contained"
+          onClick={() => cargarNoticias(nextPage)}
+          sx={{ mt: 3 }}
+        >
+          Cargar más
+        </Button>
+      )}
+    </div>
   );
 }
