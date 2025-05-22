@@ -35,10 +35,10 @@ export const obtenerNoticias = async (opciones = {}) => {
     const response = await fetch(`${API_URL}?${params.toString()}`);
     const data = await response.json();
 
-    if (!data.results || !Array.isArray(data.results)) {
-      console.warn("⚠️ Formato inesperado de datos:", data);
-      return { results: [], nextPage: null };
-    }
+  if (data.status === "error" || !Array.isArray(data.results)) {
+  console.warn("⚠️ Error o formato inesperado de datos:", data);
+  return { results: [], nextPage: null };
+}
 
     return {
       results: data.results,
