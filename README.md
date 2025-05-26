@@ -20,7 +20,7 @@
 ### 1. Cloná el repositorio
 
 ```bash
-git clone https://github.com/tuusuario/newscroll.git
+git clone https://github.com/Parkaston/newscroll
 cd newscroll
 ```
 
