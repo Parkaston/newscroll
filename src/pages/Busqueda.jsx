@@ -7,49 +7,57 @@ import { obtenerNoticiasPorCategoria, obtenerNoticias } from "../services/newsSe
 
 export default function Busqueda() {
   const [searchParams] = useSearchParams();
+  
   const { categoria } = useParams(); 
   const query = searchParams.get("q")?.toLowerCase() || ""; 
   const [resultados, setResultados] = useState([]);
   const { favoritos, toggleFavorito } = useFavoritos();
-
+  const fuenteParam = searchParams.get("fuente") || "";
+  const [fuente, setFuente] = useState(fuenteParam);
   // Traducción para las categorias, para mostrar en el titulo
-  const nombreCategoria = {
-    top: "Destacadas",
-    deportes: "Deportes",
-    politica: "Política",
-    economia: "Economía",
-    tecnologia: "Tecnología",
-    clima: "Clima",
-    salud: "Salud",
-    ciencia: "Ciencia",
-  };
+const nombreCategoria = {
+  environment: "Clima",
+  politics: "Política",
+  technology: "Tecnología",
+  sports: "Deportes",
+  health: "Salud",
+  science: "Ciencia",
+  business: "Negocios",
+  food: "Comida",
+  entertainment: "Entretenimiento",
+  world: "Mundo",
+  top: "Top",
+};
 
   // Hacemos la busqueda al cargar la pagina o hacer un cambio en el query
-  useEffect(() => {
-    const fetchData = async () => {
-      let noticias = [];
+useEffect(() => {
+  const fetchData = async () => {
+    let noticias = [];
 
-      if (categoria) {
-        // Si hay categoría, buscamos solo ahí
-        noticias = await obtenerNoticiasPorCategoria(categoria);
-      } else {
-        // Si no hay categoría, buscamos en varias
-        const categorias = ["deportes", "politica", "tecnologia", "clima", "economia"];
-        const todas = await Promise.all(categorias.map(cat => obtenerNoticiasPorCategoria(cat, false)));
-        noticias = todas.flat();
-      }
-
-      // Filtramos por título o descripción que coincida con el query
-      const filtradas = noticias.filter(noticia =>
-        noticia.title?.toLowerCase().includes(query) ||
-        noticia.description?.toLowerCase().includes(query)
+    if (categoria) {
+      const { results } = await obtenerNoticiasPorCategoria(categoria, null, false, fuente);
+      noticias = results;
+    } else {
+      const categorias = ["deportes", "politica", "tecnologia", "clima", "economia"];
+      const todas = await Promise.all(
+        categorias.map(async (cat) => {
+          const { results } = await obtenerNoticiasPorCategoria(cat, null, false, fuente);
+          return results;
+        })
       );
+      noticias = todas.flat();
+    }
 
-      setResultados(filtradas);
-    };
+    const filtradas = noticias.filter(noticia =>
+      noticia.title?.toLowerCase().includes(query) ||
+      noticia.description?.toLowerCase().includes(query)
+    );
 
-    fetchData();
-  }, [query, categoria]);
+    setResultados(filtradas);
+  };
+
+  fetchData();
+}, [query, categoria, fuente]);
 
   return (
     <Container sx={{ mt: 4 }}>

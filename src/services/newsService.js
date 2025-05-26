@@ -8,11 +8,18 @@ const categoriasMapeadas = {
   tecnologia: "technology",
   deportes: "sports",
   clima: "environment",
+  salud: "health",
+  ciencia: "science",
+  negocios: "business",
+  entretenimiento: "entertainment",
+  comida: "food",
+  mundo: "world",
+  top: "top",
 };
 
 // Función principal para hacer peticiones a la API de noticias
 export const obtenerNoticias = async (opciones = {}) => {
-  const { categoria, pais = "ar", page = null } = opciones;
+  const { categoria, pais = "ar", page = null, fuente = "" } = opciones;
 
   // Limpia la categoría si viene con token de paginación, como "sports:1"
   const categoriaLimpia = categoria?.split(":")[0];
@@ -25,11 +32,16 @@ export const obtenerNoticias = async (opciones = {}) => {
   });
 
   if (page) params.append("page", page); // Token de paginación
-  if (categoriaAPI) {
-    params.append("category", categoriaAPI);
-  } else {
-    params.append("country", pais); // Si no hay categoría, se busca por país
-  }
+if (fuente) {
+  params.append("domainurl", fuente);
+}
+if (categoriaAPI && !fuente) {
+  // Si no estás filtrando por fuente, podés usar categoría
+  params.append("category", categoriaAPI);
+} else if (!categoriaAPI && !fuente) {
+  // Si no hay categoría ni fuente, filtrá por país
+  params.append("country", pais);
+}
 
   try {
     const response = await fetch(`${API_URL}?${params.toString()}`);
@@ -55,7 +67,8 @@ export const obtenerNoticias = async (opciones = {}) => {
 export const obtenerNoticiasPorCategoria = async (
   categoria,
   nextPage = null,
-  usarCache = false
+  usarCache = false,
+  fuente = ""
 ) => {
   const cacheKey = `noticias_${categoria}_${nextPage || "inicio"}`;
 
@@ -67,7 +80,7 @@ export const obtenerNoticiasPorCategoria = async (
     }
   }
 
-  const data = await obtenerNoticias({ categoria, page: nextPage });
+  const data = await obtenerNoticias({ categoria, page: nextPage, fuente });
 
   // Guarda en caché si está activado
   if (usarCache) {

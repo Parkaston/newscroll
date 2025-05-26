@@ -19,13 +19,16 @@ export default function Header() {
 
   const partesRuta = location.pathname.split("/");
   const categoriaActual = partesRuta[1] === "categoria" ? partesRuta[2] : partesRuta[1];
-
+  const fuente = localStorage.getItem("fuenteSeleccionada") || "";  
     const handleBuscar = () => {
     if (query.trim()) {
-      const ruta =
-        categoriaActual && categoriaActual !== "buscar"
-          ? `/${categoriaActual}/buscar?q=${encodeURIComponent(query.trim())}`
-          : `/buscar?q=${encodeURIComponent(query.trim())}`;
+  const ruta =
+  categoriaActual === "favoritas"
+    ? `/favoritas/buscar?q=${encodeURIComponent(query.trim())}`
+    : categoriaActual && categoriaActual !== "buscar"
+    ? `/${categoriaActual}/buscar?q=${encodeURIComponent(query.trim())}&fuente=${encodeURIComponent(fuente)}`
+    : `/buscar?q=${encodeURIComponent(query.trim())}&fuente=${encodeURIComponent(fuente)}`;
+
 
       navigate(ruta);
       setQuery("");

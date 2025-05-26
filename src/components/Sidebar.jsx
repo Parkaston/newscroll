@@ -5,6 +5,12 @@ import MemoryIcon from "@mui/icons-material/Memory";
 import SportsSoccerIcon from "@mui/icons-material/SportsSoccer"; 
 import StarIcon from "@mui/icons-material/Star";       
 import { useLocation } from "react-router-dom";
+import PublicIcon from "@mui/icons-material/Public";
+import FastfoodIcon from "@mui/icons-material/Fastfood";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import ScienceIcon from "@mui/icons-material/Science";
+import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
+import MovieIcon from "@mui/icons-material/Movie"
 // Importamos componentes de Material UI para construir el menú lateral (En material es Drawer)
 import {
   Drawer,
@@ -27,6 +33,12 @@ const items = [
   { text: "Política", icon: GavelIcon, path: "/politics" },
   { text: "Tecnología", icon: MemoryIcon, path: "/technology" },
   { text: "Deportes", icon: SportsSoccerIcon, path: "/sports" },
+  { text: "Salud", icon: LocalHospitalIcon, path: "/health" },
+  { text: "Ciencia", icon: ScienceIcon, path: "/science" },
+  { text: "Negocios", icon: BusinessCenterIcon, path: "/business" },
+  { text: "Comida", icon: FastfoodIcon, path: "/food" },
+  { text: "Entretenimiento", icon: MovieIcon, path: "/entertainment" },
+  { text: "Mundo", icon: PublicIcon, path: "/world" },
   { text: "Favoritas", icon: StarIcon, path: "/favoritas" },
 ];
 

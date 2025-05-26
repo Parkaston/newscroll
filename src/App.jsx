@@ -15,19 +15,13 @@ export default function App() {
     <Routes>
       {/* Redirige automáticamente la ruta raíz "/" hacia "/top" */}
       <Route path="/" element={<Navigate to="/top" replace />} />
-
+     
       {/* Agrupamos rutas que comparten el mismo layout */}
       <Route element={<Layout />}>
-        {/* Ruta dinámica: muestra noticias de una categoría (ej: /sports, /technology, etc.) */}
         <Route path=":categoria" element={<Categoria />} />
-
-        {/* Ruta para la sección de noticias favoritas */}
         <Route path="favoritas" element={<Favoritas />} />
-
-        {/* Ruta general para búsqueda sin categoría específica */}
+        <Route path="favoritas/buscar" element={<Favoritas />} />
         <Route path="buscar" element={<Busqueda />} />
-
-        {/* Ruta de búsqueda dentro de una categoría específica (ej: /sports/buscar?q=clima) */}
         <Route path=":categoria/buscar" element={<Busqueda />} />
       </Route>
     </Routes>
