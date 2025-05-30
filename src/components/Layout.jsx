@@ -44,7 +44,7 @@ export default function Layout() {
               boxSizing: "border-box",
               borderRight: "none",
               transition: "transform 0.3s ease-in-out",
-              marginTop: "112px", // ✅ Ajustado para header de 2 filas en mobile
+              marginTop: "112px", 
               height: "calc(100% - 112px)",
             },
           }}
@@ -77,7 +77,7 @@ export default function Layout() {
         component="main"
         sx={{
           flexGrow: 1,
-          mt: isMobile ? "112px" : "64px", // ✅ Ajuste dinámico según dispositivo
+          mt: isMobile ? "112px" : "64px", 
           p: 2,
           ...(isMobile ? {} : { width: `calc(100% - ${drawerWidth}px)` }),
         }}
