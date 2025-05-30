@@ -15,6 +15,16 @@
 
 ---
 
+## 🚀 ¡Nuevo! Proyecto en vivo
+
+Ya puedes ver el portal de noticias **NewScroll** en línea gracias al despliegue en **Vercel**. Explora las categorías, realiza búsquedas personalizadas, guarda tus noticias favoritas ¡y mucho más!
+
+🔗 [Haz clic aquí para ver el proyecto en vivo](https://newscroll.vercel.app)
+
+> El sitio es totalmente responsive, funciona en dispositivos móviles, y soporta modo claro/oscuro dinámico.
+
+---
+
 ## 🚀 Instalación y ejecución
 
 ### 1. Cloná el repositorio
