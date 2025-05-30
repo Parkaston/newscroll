@@ -21,7 +21,7 @@ export default function TarjetaNoticia({ noticia, onFavorito, esFavorita }) {
     display: "flex",
     mb: 2,
     alignItems: "center",
-    width: "100%", // <-- Esto hace que la tarjeta use todo el ancho disponible
+    width: "100%", 
   }}
 >
   <CardMedia
@@ -59,7 +59,7 @@ export default function TarjetaNoticia({ noticia, onFavorito, esFavorita }) {
   component="div"
   sx={{
     a: {
-      color: "text.primary", // se adapta automáticamente al modo claro/oscuro
+      color: "text.primary",
       textDecoration: "none",
       "&:hover": {
         textDecoration: "underline",
