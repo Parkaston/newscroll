@@ -5,7 +5,6 @@ import {
   Grid,
   IconButton,
   useMediaQuery,
-  Toolbar,
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Link, useLocation } from "react-router-dom";
@@ -47,30 +46,32 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       sx={{
         width: drawerWidth,
         backgroundColor: theme.palette.secondary.main,
-        height: "100%",
+        flex: 1,
         p: 2,
         boxSizing: "border-box",
+        overflowY: "auto",
       }}
     >
-      {/* Espacio para evitar solapamiento con el AppBar */}
-      <Toolbar />
+      {/* Espaciador que coincide con el marginTop del Drawer */}
+      <Box sx={{ height: "112px" }} />
 
-<Typography
-  variant="subtitle1"
-  sx={{
-    mb: 2,
-    fontWeight: "bold",
-    textAlign: "center",
-    fontSize: "1rem",
-    letterSpacing: "0.5px",
-    color: theme.palette.text.secondary,
-    textTransform: "uppercase",
-    borderBottom: `2px solid ${theme.palette.divider}`,
-    pb: 1,
-  }}
->
-  Categorías
-</Typography>
+      {/* Título de sección */}
+      <Typography
+        variant="subtitle1"
+        sx={{
+          mb: 2,
+          fontWeight: "bold",
+          textAlign: "center",
+          fontSize: "1rem",
+          letterSpacing: "0.5px",
+          color: theme.palette.text.secondary,
+          textTransform: "uppercase",
+          borderBottom: `2px solid ${theme.palette.divider}`,
+          pb: 1,
+        }}
+      >
+        Categorías
+      </Typography>
 
       <Grid container spacing={2} direction="column">
         {items.map((item) => {
@@ -109,7 +110,9 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                   <Typography
                     variant="caption"
                     sx={{
-                      color: isActive ? "primary.main" : theme.palette.text.primary,
+                      color: isActive
+                        ? "primary.main"
+                        : theme.palette.text.primary,
                       fontWeight: isActive ? "bold" : "normal",
                     }}
                   >
@@ -135,6 +138,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           width: drawerWidth,
           backgroundColor: theme.palette.secondary.main,
           borderRight: "none",
+          display: "flex",
+          flexDirection: "column",
         },
       }}
     >

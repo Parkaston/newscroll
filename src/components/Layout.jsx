@@ -1,16 +1,11 @@
-
-
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import {
   Box,
   CssBaseline,
   Drawer,
-  IconButton,
-  Toolbar,
   useMediaQuery,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import Sidebar from "./Sidebar";
 import Header from "./Header";
 import { useTheme } from "@mui/material/styles";
@@ -49,6 +44,8 @@ export default function Layout() {
               boxSizing: "border-box",
               borderRight: "none",
               transition: "transform 0.3s ease-in-out",
+              marginTop: "112px", // ✅ Ajustado para header de 2 filas en mobile
+              height: "calc(100% - 112px)",
             },
           }}
         >
@@ -80,7 +77,7 @@ export default function Layout() {
         component="main"
         sx={{
           flexGrow: 1,
-          mt: "64px", 
+          mt: isMobile ? "112px" : "64px", // ✅ Ajuste dinámico según dispositivo
           p: 2,
           ...(isMobile ? {} : { width: `calc(100% - ${drawerWidth}px)` }),
         }}
